@@ -17,25 +17,10 @@ Each directory contains a `.env` file for reference. Be sure to update them with
 + OPTIONAL: MongoDB connection string
     - It is fine to use the default connection string of `mongodb://mongodb:27017/photoshare` - by default it will create a new database for you on the `graphql-mongodb` service.
 
-Before starting this project, you will need to update the following `.env` files:
-+ `nextjs-with-apollo/.env`
-+ `photo-share-api/.env`
-+ `photo-share-client/.env`
-
-Once you have properly created and configured your `.env` files, be sure to edit `.gitignore` and uncomment the lines:
-```sh
-...
-# nextjs-with-apollo/.env
-# photo-share-api/.env
-# photo-share-client/.env
-```
-
-Also, be sure that you run the following commands so that git no longer tracks those files:
-```sh
-$ git rm --cached nextjs-with-apollo/.env
-$ git rm --cached photo-share-api/.env
-$ git rm --cached photo-share-client/.env
-```
+Before starting this project, you will need to update the following `sample.env` files with your own settings and save them as `.env` in their respective directories:
++ `nextjs-with-apollo/sample.env`
++ `photo-share-api/sample.env`
++ `photo-share-client/sample.env`
 
 Once this is complete, you can spin up the project by running:
 

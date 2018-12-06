@@ -11,45 +11,40 @@ Please go to [GitHub Developer Settings](https://github.com/settings/developers)
 
 Be sure to note the `Client ID` and `Client Secret` values.
 
-Each directory contains a `sample.env` file for reference. Simply copy those values into a new `.env` file with appropriate settings which include:
+Each directory contains a `.env` file for reference. Be sure to update them with appropriate settings for your environment which include:
 + GitHub client ID
 + GitHub client secret
 + OPTIONAL: MongoDB connection string
     - It is fine to use the default connection string of `mongodb://mongodb:27017/photoshare` - by default it will create a new database for you on the `graphql-mongodb` service.
 
-Before starting this project, you will need to create two `.env` files - one in `./photo-share-api` and one in `./photo-share-client`. 
+Before starting this project, you will need to update the following `.env` files:
++ `nextjs-with-apollo/.env`
++ `photo-share-api/.env`
++ `photo-share-client/.env`
 
-Please copy `photo-share-api/sample.env` to `photo-share-api/.env` - replacing the placeholder values with your own settings.
+Once you have properly created and configured your `.env` files, be sure to edit `.gitignore` and uncomment the lines:
+```sh
+...
+# nextjs-with-apollo/.env
+# photo-share-api/.env
+# photo-share-client/.env
+```
 
-Please copy `photo-share-client/sample.env` to `photo-share-client/.env` - replacing the placeholder values with your own settings.
+Also, be sure that you run the following commands so that git no longer tracks those files:
+```sh
+$ git rm --cached nextjs-with-apollo/.env
+$ git rm --cached photo-share-api/.env
+$ git rm --cached photo-share-client/.env
+```
 
-Once you have properly created and configured your `.env` files, you can spin up the project by running:
+Once this is complete, you can spin up the project by running:
 
     $ npm start
 
 This will create the following Docker containers:
 + `graphql-nextjs` - A simple [NextJS](https://nextjs.org) web application to work with our GraphQL API
-    - By default, this project **WILL** hot reload changes made to this app in the Docker container. 
-        + There is an issue where hot module loading may prematurely dispose of NextJS pages and cause unexpected behavior **IN DEVELOPMENT MODE ONLY**. 
-        + If you **DO NOT WANT** hot reloading, make sure the following commands are updated for the `graphql-nextjs` service in the `./docker-compose.yml` file:
-    ```sh
-    # If you want to take advantage of hot reloading in NextJS:
-    # command: ./node_modules/.bin/next
-
-    # If you DO NOT WANT to take advantage of hot reloading in NextJS:
-    command: ./node_modules/.bin/next start
-
-    # If you want local changes to update in the Docker container, you can pass through project files like this:
-    # volumes:
-    #   - ./nextjs-with-apollo:/usr/src
-
-    ```
+    - By default, this project **WILL NOT** hot reload changes made to this app in the Docker container. 
 + `graphql-web` - A simple [React](https://reactjs.org) web application to work with our GraphQL API
-    - By default, this project **WILL** hot reload changes made to this app in the Docker container. If you **DO NOT WANT** hot reloading, comment out the following lines in the `./docker-compose.yml` file:
-    ```sh
-    volumes:
-      - ./photo-share-client:/usr/src
-    ```
 + `graphql-api` - The [GraphQL](https://graphql.org) server powered by [Express](https://expressjs.com)
     - NOTE: This is an example for educational purposes and should be hardened before deploying to production.
 + `graphql-mongodb` - A [MongoDB](https://www.mongodb.com) server
